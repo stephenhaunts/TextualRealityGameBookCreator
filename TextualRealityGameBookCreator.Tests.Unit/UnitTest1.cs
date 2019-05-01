@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TextualRealityGameBookCreator.Tests.Unit
@@ -28,9 +30,27 @@ namespace TextualRealityGameBookCreator.Tests.Unit
     [TestClass]
     public class UnitTest1
     {
+        const string EXAMPLES_PATH = "/Examples";
+        const string EXAMPLE1 = "/Game Book Example.gbc";
+
         [TestMethod]
         public void TestMethod1()
         {
+            var file = LoadExampleFile();
+
+        }
+
+        private static string[] LoadExampleFile()
+        {
+            var path = Path.GetFullPath(Environment.CurrentDirectory + EXAMPLES_PATH);
+            var filename = Path.GetFullPath(path + EXAMPLE1);
+
+            if (File.Exists(filename))
+            {
+                return File.ReadAllLines(filename);
+            }
+
+            return null;
         }
     }
 }
