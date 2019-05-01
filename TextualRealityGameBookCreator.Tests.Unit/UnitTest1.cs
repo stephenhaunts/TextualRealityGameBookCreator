@@ -36,18 +36,17 @@ namespace TextualRealityGameBookCreator.Tests.Unit
         [TestMethod]
         public void TestMethod1()
         {
-            var file = LoadExampleFile();
-
+            var file = LoadExampleFile(EXAMPLE1);
         }
 
-        private static string[] LoadExampleFile()
+        private static string[] LoadExampleFile(string filename)
         {
             var path = Path.GetFullPath(Environment.CurrentDirectory + EXAMPLES_PATH);
-            var filename = Path.GetFullPath(path + EXAMPLE1);
+            var fullFilename = Path.GetFullPath(path + filename);
 
-            if (File.Exists(filename))
+            if (File.Exists(fullFilename))
             {
-                return File.ReadAllLines(filename);
+                return File.ReadAllLines(fullFilename);
             }
 
             return null;
