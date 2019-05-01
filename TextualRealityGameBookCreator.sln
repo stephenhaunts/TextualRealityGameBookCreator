@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextualRealityGameBookCreator", "TextualRealityGameBookCreator\TextualRealityGameBookCreator.csproj", "{EE620217-9C06-42E6-A1A7-3E28BF7FDCBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextualRealityGameBookCreator.Tests.Unit", "TextualRealityGameBookCreator.Tests.Unit\TextualRealityGameBookCreator.Tests.Unit.csproj", "{89260096-1B09-478B-8B74-65A50670BBA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE620217-9C06-42E6-A1A7-3E28BF7FDCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE620217-9C06-42E6-A1A7-3E28BF7FDCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE620217-9C06-42E6-A1A7-3E28BF7FDCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE620217-9C06-42E6-A1A7-3E28BF7FDCBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89260096-1B09-478B-8B74-65A50670BBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89260096-1B09-478B-8B74-65A50670BBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89260096-1B09-478B-8B74-65A50670BBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89260096-1B09-478B-8B74-65A50670BBA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
