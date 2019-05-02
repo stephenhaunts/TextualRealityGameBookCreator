@@ -31,7 +31,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
     public class UnitTest1
     {
         const string EXAMPLES_PATH = "/Examples";
-        const string EXAMPLE1 = "/Game Book Example.igbc";
+        const string EXAMPLE1 = "/Game Book Example.gbc";
 
         [TestMethod]
         public void TestMethod1()

@@ -27,33 +27,4 @@ define contents
    prologue
    dedication
    rules
-   start
 end contents
-
-define paragraph start
-   paragraph = "You are standing at the start of a winding path. There is a split in the road going left or right.
-   choice.left = Take the left hand path.
-   choice.right = Take the right hand path.
-end start
-
-define paragraph left
-   paragraph = "You see an old man standing in the road. He looks frail and unwelcoming. The path continues into the distance.
-   choice.talktoman = Ask the old man how to get to the castle.
-   choice.takepath = Ignore the old man and continue down the path.
-end left
-
-define paragraph right
-   paragraph = "You are eaten by an ogre with big teeth that are dripping blood onto the floor. You can start the quest again.
-   death.start
-end right
-
-define paragraph talktoman
-   paragraph = "The old man looks at you agitated and then pulls out a knife that he plunges into your heart. As the life drains out of your body, you stare into his cold, dead, eyes. He cackles to himself as he licks the blood from his knife.
-   death.start
-end talktoman
-
-define paragraph takepath
-   paragraph = "You walk down the path for what feels like hours and arrive at the gates of a castle. There is a bell next to the gate.
-   choice.ringbell = Ring the bell.
-   choice.left = Retreat from the castle and go back down the pathway.
-end takepath
