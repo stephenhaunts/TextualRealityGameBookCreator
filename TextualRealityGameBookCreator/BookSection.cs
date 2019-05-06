@@ -1,4 +1,4 @@
-/*
+﻿/*
 MIT License
 
 Copyright (c) 2019 
@@ -22,34 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TextualRealityGameBookCreator.Tests.Unit
+namespace TextualRealityGameBookCreator
 {
-    [TestClass]
-    public class UnitTest1
+    public class BookSection
     {
-        const string EXAMPLES_PATH = "/Examples";
-        const string EXAMPLE1 = "/Game Book Example.gbc";
-
-        [TestMethod]
-        public void TestMethod1()
-        {
-            var file = LoadExampleFile(EXAMPLE1);
-        }
-
-        private static string[] LoadExampleFile(string filename)
-        {
-            var path = Path.GetFullPath(Environment.CurrentDirectory + EXAMPLES_PATH);
-            var fullFilename = Path.GetFullPath(path + filename);
-
-            if (File.Exists(fullFilename))
-            {
-                return File.ReadAllLines(fullFilename);
-            }
-
-            return null;
-        }
     }
 }
