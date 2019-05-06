@@ -30,15 +30,6 @@ using TextualRealityGameBookCreator.SectionPrimitives;
 
 namespace TextualRealityGameBookCreator
 {
-    public enum ParserState
-    {
-        OutsideDefine = 0,
-        BookName = 1,
-        Section = 2,
-        Contents = 3,
-        Paragraph = 4
-    }
-
     public partial class ParseFile : IParseFile
     {
         private List<string> _rawFile;

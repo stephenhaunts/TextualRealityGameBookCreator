@@ -30,6 +30,26 @@ namespace TextualRealityGameBookCreator
 {
     public partial class ParseFile
     {
+        private void ProcessSection(string strippedLine, string removeDefine)
+        {
+            _parserState = ParserState.Section;
+
+            string[] split = removeDefine.Split(':');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            if (firstToken == ("section"))
+            {
+                IBookSection section = new BookSection(split[1].TrimStart(' '));
+                _currentParsedSection = section;
+                _book.AddSection(section);
+            }
+        }
+
         private void ProcessInsideSection(string strippedLine)
         {
             if (strippedLine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
@@ -78,26 +98,6 @@ namespace TextualRealityGameBookCreator
 
             ErrorAndThrow("Invalid attribute found in section on line " + _lineCounter + " <" + strippedLine + ">.");
 
-        }
-
-        private void ProcessSection(string strippedLine, string removeDefine)
-        {
-            _parserState = ParserState.Section;
-
-            string[] split = removeDefine.Split(':');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-            if (firstToken == ("section"))
-            {
-                IBookSection section = new BookSection(split[1].TrimStart(' '));
-                _currentParsedSection = section;
-                _book.AddSection(section);
-            }
         }
     }
 }
