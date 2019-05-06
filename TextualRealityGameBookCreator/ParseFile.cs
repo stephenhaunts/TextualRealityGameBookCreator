@@ -29,12 +29,22 @@ using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator
 {
+    public enum ParserState
+    {
+        OutsideDefine = 0,
+        BookName = 1,
+        Section = 2,
+        Contents = 3,
+        Paragraph = 4
+    }
+
     public class ParseFile : IParseFile
     {
         private List<string> _rawFile;
         private IBook _book;
         private List<string> _errors;
         private int _lineCounter = 0;
+        private ParserState _parserState = ParserState.OutsideDefine;
 
         public ParseFile()
         {
@@ -42,6 +52,7 @@ namespace TextualRealityGameBookCreator
             _rawFile = new List<string>();
             _errors = new List<string>();
             _lineCounter = 0;
+            _parserState = ParserState.OutsideDefine;
         }
 
         public ReadOnlyCollection<string> RawFile
@@ -113,28 +124,39 @@ namespace TextualRealityGameBookCreator
                 // check if this define is a bookname
                 if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))
                 {
-                    string[] split = removeDefine.Split(':');
-
-                    if (split.Length != 2)
-                    {
-                        var errorMessage = "Error on line " + _lineCounter + " <" + strippedLine + ">.";
-                        _errors.Add(errorMessage);
-                        throw new InvalidOperationException(errorMessage);
-                    }
-
-                    var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-                    if (firstToken == ("bookname"))
-                    {
-                        _book.BookName = split[1].TrimStart(' ');
-                    }
+                    ProcessBookName(strippedLine, removeDefine);
                 }
             }
             else
             {
-                var errorMessage = "'define' keyword expcted but found <" + strippedLine + ">.";
-                _errors.Add(errorMessage);
-                throw new InvalidOperationException(errorMessage);
+                ErrorAndThrow("'define' keyword expcted but found <" + strippedLine + ">.");
             }
+        }
+
+        private void ProcessBookName(string strippedLine, string removeDefine)
+        {
+            _parserState = ParserState.BookName;
+
+            string[] split = removeDefine.Split(':');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            if (firstToken == ("bookname"))
+            {
+                _book.BookName = split[1].TrimStart(' ');
+            }
+
+            _parserState = ParserState.OutsideDefine;
+        }
+
+        private void ErrorAndThrow(string errorMessage)
+        {
+            _errors.Add(errorMessage);
+            throw new InvalidOperationException(errorMessage);
         }
     }
 }
