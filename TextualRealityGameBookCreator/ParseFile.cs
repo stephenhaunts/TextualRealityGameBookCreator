@@ -155,6 +155,13 @@ namespace TextualRealityGameBookCreator
                             return;
                         }
 
+                        // check if this define is a section
+                        if (removeDefine.ToLower().StartsWith("contents", StringComparison.Ordinal))
+                        {
+                            ProcessContents(strippedLine, removeDefine);
+                            return;
+                        }
+
                         ErrorAndThrow("Invalid definition name found on line "  + _lineCounter + " <" + strippedLine + ">.");
                     }
                     else
@@ -165,9 +172,23 @@ namespace TextualRealityGameBookCreator
                 case ParserState.Section:
                     ProcessInsideSection(strippedLine);
                     break;
+                case ParserState.Contents:
+                    ProcessInsideContents(strippedLine);
+                    break;
+            }
+        }
+
+        private void ProcessInsideContents(string strippedLine)
+        {
+            if (strippedLine.ToLower().StartsWith("end", StringComparison.Ordinal))
+            {
+                _parserState = ParserState.OutsideDefine;
+                return;
             }
 
+            _book.GetContents().Add(strippedLine);
         }
+
 
         private void ProcessInsideSection(string strippedLine)
         {
@@ -237,6 +258,28 @@ namespace TextualRealityGameBookCreator
                 _currentParsedSection = section;
                 _book.AddSection(section);
             }
+        }
+
+        private void ProcessContents(string strippedLine, string removeDefine)
+        {
+            _parserState = ParserState.Contents;
+
+
+
+            //string[] split = removeDefine.Split(':');
+
+            //if (split.Length != 2)
+            //{
+            //    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            //}
+
+            //var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            //if (firstToken == ("section"))
+            //{
+            //    IBookSection section = new BookSection(split[1].TrimStart(' '));
+            //    _currentParsedSection = section;
+            //    _book.AddSection(section);
+            //}
         }
 
 
