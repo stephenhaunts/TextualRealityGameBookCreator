@@ -27,6 +27,7 @@ namespace TextualRealityGameBookCreator.Interfaces
 {
     public interface IBook
     {
+
         void AddSection(IBookSection section);
         int CountSections { get; }
         IBookSection GetSection(string sectionName);

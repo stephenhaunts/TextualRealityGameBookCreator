@@ -31,10 +31,12 @@ namespace TextualRealityGameBookCreator
 {
     public class ParseFile : IParseFile
     {
-        List<string> _rawFile;
+        private List<string> _rawFile;
+        private IBook _book;
 
         public ParseFile()
         {
+            _book = new Book();
             _rawFile = new List<string>(); 
         }
 
@@ -48,7 +50,22 @@ namespace TextualRealityGameBookCreator
 
         public IBook Parse(List<string> rawFile)
         {
-            return new Book();
+            _book = new Book();
+
+            foreach (var line in _rawFile)
+            {
+                // TODO: Look for more complete way of stripping whitepace from the front.
+                var strippedLine = line.TrimStart(' ');
+
+                if (CheckForComments(strippedLine))
+                {
+                    continue;
+                }
+
+                ProcessDefineSections(strippedLine);
+            }
+
+            return _book;
         }
 
         public IBook Parse(string fileName)
@@ -66,6 +83,20 @@ namespace TextualRealityGameBookCreator
             throw new FileNotFoundException("Input file not found.", fileName);
         }
 
+        private bool CheckForComments(string line)
+        {
+            if (line.StartsWith("//", StringComparison.Ordinal))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ProcessDefineSections(string strippedLine)
+        {
+
+        }
 
     }
 }
