@@ -39,7 +39,7 @@ namespace TextualRealityGameBookCreator
         Paragraph = 4
     }
 
-    public class ParseFile : IParseFile
+    public partial class ParseFile : IParseFile
     {
         private List<string> _rawFile;
         private IBook _book;
@@ -182,115 +182,6 @@ namespace TextualRealityGameBookCreator
                     ProcessInsideContents(strippedLine);
                     break;
             }
-        }
-
-        private void ProcessInsideContents(string strippedLine)
-        {
-            if (strippedLine.ToLower().StartsWith("end", StringComparison.Ordinal))
-            {
-                _parserState = ParserState.OutsideDefine;
-                return;
-            }
-
-            _book.GetContents().Add(strippedLine);
-        }
-
-
-        private void ProcessInsideSection(string strippedLine)
-        {
-            if (strippedLine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
-            {
-                string[] split = strippedLine.Split('=');
-
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-                if (firstToken == ("paragraph"))
-                {
-                    ISectionPrimitive paragraph = new Paragraph(split[1].TrimStart(' '));
-                    _currentParsedSection.Add(paragraph);
-
-                }
-                return;
-            }
-
-            if (strippedLine.ToLower().StartsWith("image", StringComparison.Ordinal))
-            {
-                string[] split = strippedLine.Split('=');
-
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-                if (firstToken == ("image"))
-                {
-                    ISectionPrimitive paragraph = new Image(split[1].TrimStart(' '));
-                    _currentParsedSection.Add(paragraph);
-
-                }
-                return;
-            }
-
-            if (strippedLine.ToLower().StartsWith("end", StringComparison.Ordinal))
-            {
-                _parserState = ParserState.OutsideDefine;
-                return;
-            }
-
-            ErrorAndThrow("Invalid attribute found in section on line " + _lineCounter + " <" + strippedLine + ">.");
-
-        }
-
-        private void ProcessSection(string strippedLine, string removeDefine)
-        {
-            _parserState = ParserState.Section;
-
-            string[] split = removeDefine.Split(':');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-            if (firstToken == ("section"))
-            {
-                IBookSection section = new BookSection(split[1].TrimStart(' '));
-                _currentParsedSection = section;
-                _book.AddSection(section);
-            }
-        }
-
-        private void ProcessContents(string strippedLine, string removeDefine)
-        {
-            _parserState = ParserState.Contents;
-        }
-
-
-
-        private void ProcessBookName(string strippedLine, string removeDefine)
-        {
-            _parserState = ParserState.BookName;
-
-            string[] split = removeDefine.Split(':');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-            if (firstToken == ("bookname"))
-            {
-                _book.BookName = split[1].TrimStart(' ');
-            }
-
-            _parserState = ParserState.OutsideDefine;
         }
 
         private void ErrorAndThrow(string errorMessage)
