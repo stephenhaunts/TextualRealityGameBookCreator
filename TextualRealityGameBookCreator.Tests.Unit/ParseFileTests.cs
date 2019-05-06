@@ -119,7 +119,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
         }
 
         [TestMethod]
-        public void LoadExample1Loads3SectionsAndContents()
+        public void LoadExample2Loads3SectionsAndContents()
         {
             IParseFile parser = new ParseFile();
             var book = parser.Parse("/Examples/Example2.gbc");
@@ -149,6 +149,15 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.IsTrue(book.GetContents().Exists("Prologue"));
             Assert.IsTrue(book.GetContents().Exists("Dedication"));
             Assert.IsTrue(book.GetContents().Exists("Rules"));
+        }
+
+        [TestMethod]
+        public void LoadExample2ReportsErrorForDuplicateContents()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example2 - Duplicate Contents.gbc");
+
+            Assert.AreEqual("Duplicate contents section found on line 32.", parser.ErrorList[0]);
         }
     }
 }

@@ -158,8 +158,14 @@ namespace TextualRealityGameBookCreator
                         // check if this define is a section
                         if (removeDefine.ToLower().StartsWith("contents", StringComparison.Ordinal))
                         {
-                            ProcessContents(strippedLine, removeDefine);
-                            return;
+                            if (_book.GetContents().Count == 0)
+                            {
+                                ProcessContents(strippedLine, removeDefine);
+                                return;
+                            }
+
+                            ErrorAndThrow("Duplicate contents section found on line " + _lineCounter + ".");
+
                         }
 
                         ErrorAndThrow("Invalid definition name found on line "  + _lineCounter + " <" + strippedLine + ">.");
@@ -263,23 +269,6 @@ namespace TextualRealityGameBookCreator
         private void ProcessContents(string strippedLine, string removeDefine)
         {
             _parserState = ParserState.Contents;
-
-
-
-            //string[] split = removeDefine.Split(':');
-
-            //if (split.Length != 2)
-            //{
-            //    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            //}
-
-            //var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-            //if (firstToken == ("section"))
-            //{
-            //    IBookSection section = new BookSection(split[1].TrimStart(' '));
-            //    _currentParsedSection = section;
-            //    _book.AddSection(section);
-            //}
         }
 
 
