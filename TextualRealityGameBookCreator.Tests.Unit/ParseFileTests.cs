@@ -29,7 +29,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
     [TestClass]
     public class ParseFileTests
     {
-        const string EXAMPLE1 = "/Examples/Game Book Example.gbc";
+        const string EXAMPLE1 = "/Examples/Example1 - BookName Only.gbc";
 
         [TestMethod]
         public void LoadExampleFileLoadsNonEmptyFileAndReturnsArrayOfLines()
@@ -39,6 +39,16 @@ namespace TextualRealityGameBookCreator.Tests.Unit
 
             Assert.IsNotNull(book);
             Assert.IsTrue(parser.RawFile.Count > 0);
+        }
+
+        [TestMethod]
+        public void LoadExample1AndSetBookName()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse(EXAMPLE1);
+
+            Assert.IsNotNull(book);
+            Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
         }
     }
 }

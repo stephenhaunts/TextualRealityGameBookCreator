@@ -195,5 +195,23 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             IBook book = BookWithTwoSections();
             Assert.AreEqual(2, book.CountSections);
         }
+
+        [TestMethod]
+        public void BookNameReturnsEmptyStringOnInitialization()
+        {
+            IBook book = new Book();
+            Assert.AreEqual(string.Empty, book.BookName);
+        }
+
+        [TestMethod]
+        public void BookNamePropertySetsName()
+        {
+            IBook book = new Book
+            {
+                BookName = "Star Wars"
+            };
+
+            Assert.AreEqual("Star Wars", book.BookName);
+        }
     }
 }

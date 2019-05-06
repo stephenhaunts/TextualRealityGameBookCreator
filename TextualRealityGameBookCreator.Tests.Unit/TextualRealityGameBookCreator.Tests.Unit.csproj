@@ -16,17 +16,38 @@
     <ProjectReference Include="..\TextualRealityGameBookCreator\TextualRealityGameBookCreator.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Examples\Game Book Example.gbc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Remove="Examples\Game Book Example.gbc" />
+    <None Remove="Examples\Example1 %28copy%29.gbc" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Examples\Game Book Example %28copy%29.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\Game Book Example %28copy%29.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example2.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example3.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example1.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Example1.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example1 - BookName Only.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Section Primitives\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="ParseFileTests.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 </Project>

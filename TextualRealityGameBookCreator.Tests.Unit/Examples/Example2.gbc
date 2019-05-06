@@ -22,3 +22,9 @@ end dedication
 define section : rules
    paragraph = Navigate through the book by making decisions at the decision points which will make you turn to different paragraphs.
 end rules
+
+define contents
+   prologue
+   dedication
+   rules
+end contents

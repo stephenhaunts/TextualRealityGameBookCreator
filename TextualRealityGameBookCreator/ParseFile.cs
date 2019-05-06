@@ -33,11 +33,15 @@ namespace TextualRealityGameBookCreator
     {
         private List<string> _rawFile;
         private IBook _book;
+        private List<string> _errors;
+        private int _lineCounter = 0;
 
         public ParseFile()
         {
             _book = new Book();
-            _rawFile = new List<string>(); 
+            _rawFile = new List<string>();
+            _errors = new List<string>();
+            _lineCounter = 0;
         }
 
         public ReadOnlyCollection<string> RawFile
@@ -54,8 +58,14 @@ namespace TextualRealityGameBookCreator
 
             foreach (var line in _rawFile)
             {
+                _lineCounter++;
                 // TODO: Look for more complete way of stripping whitepace from the front.
                 var strippedLine = line.TrimStart(' ');
+
+                if (string.IsNullOrEmpty(strippedLine))
+                {
+                    continue;
+                }
 
                 if (CheckForComments(strippedLine))
                 {
@@ -95,8 +105,36 @@ namespace TextualRealityGameBookCreator
 
         private void ProcessDefineSections(string strippedLine)
         {
+            if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
+            {
+                // remove 'define' from start of line
+                var removeDefine = strippedLine.Substring("define".Length).TrimStart(' ');
 
+                // check if this define is a bookname
+                if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))
+                {
+                    string[] split = removeDefine.Split(':');
+
+                    if (split.Length != 2)
+                    {
+                        var errorMessage = "Error on line " + _lineCounter + " <" + strippedLine + ">.";
+                        _errors.Add(errorMessage);
+                        throw new InvalidOperationException(errorMessage);
+                    }
+
+                    var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+                    if (firstToken == ("bookname"))
+                    {
+                        _book.BookName = split[1].TrimStart(' ');
+                    }
+                }
+            }
+            else
+            {
+                var errorMessage = "'define' keyword expcted but found <" + strippedLine + ">.";
+                _errors.Add(errorMessage);
+                throw new InvalidOperationException(errorMessage);
+            }
         }
-
     }
 }

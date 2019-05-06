@@ -29,12 +29,15 @@ namespace TextualRealityGameBookCreator
 {
     public class Book : IBook
     {
-        private Dictionary<string, IBookSection> _bookSections;
+        private readonly Dictionary<string, IBookSection> _bookSections;
 
         public Book()
         {
+            BookName = string.Empty;
             _bookSections = new Dictionary<string, IBookSection>();
         }
+
+        public string BookName { get; set; }
 
         public int CountSections
         {

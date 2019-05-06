@@ -1,9 +1,9 @@
-define bookname = The Strangest Pirate Story in the Galaxy!
+define bookname : The Strangest Pirate Story in the Galaxy!
 
 //
 // Prologue section that explains what the book is.
 //
-define section prologue
+define section : prologue
    paragraph = This is the prologue to the book.
    image = ./image.jpg
    paragraph = This is the second paragraph of the prologue.
@@ -12,19 +12,13 @@ end prologue
 //
 // Who the book is dedicated too.
 //
-define section dedication
+define section : dedication
    paragraph = This book is dedicated to Amanda, Amy and Daniel.
 end dedication
 
 //
 // Explain how to play the game.
 //
-define section rules
+define section : rules
    paragraph = Navigate through the book by making decisions at the decision points which will make you turn to different paragraphs.
 end rules
-
-define contents
-   prologue
-   dedication
-   rules
-end contents
