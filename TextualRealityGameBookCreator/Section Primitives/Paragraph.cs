@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator.SectionPrimitives
 {
-    public class Paragraph
+    public class Paragraph: ISectionPrimitive
     {
         public string Text { get; set; }
 

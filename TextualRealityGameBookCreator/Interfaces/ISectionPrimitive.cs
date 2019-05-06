@@ -22,27 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
-using TextualRealityGameBookCreator.Interfaces;
 
-namespace TextualRealityGameBookCreator.SectionPrimitives
+namespace TextualRealityGameBookCreator.Interfaces
 {
-    public class Image : ISectionPrimitive
+    public interface ISectionPrimitive
     {
-        public string FileName { get; set; }
-
-        public Image()
-        {
-            FileName = string.Empty;
-        }
-
-        public Image(string filename)
-        {
-            if (string.IsNullOrEmpty(filename))
-            {
-                throw new ArgumentNullException(nameof(filename));
-            }
-
-            FileName = filename;
-        }
     }
 }

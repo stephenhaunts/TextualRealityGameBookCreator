@@ -22,10 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator
 {
-    public class BookSection
+    public class BookSection : IBookSection
     {
+        public string Name { get; private set; }
+        private List<ISectionPrimitive> _primitives;
+
+        public BookSection()
+        {
+            Name = string.Empty;
+            _primitives = new List<ISectionPrimitive>();
+        }
+
+        public BookSection(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
+            _primitives = new List<ISectionPrimitive>();
+        }
+
+        public ReadOnlyCollection<ISectionPrimitive> Primitives
+        {
+            get
+            {
+                return new ReadOnlyCollection<ISectionPrimitive>(_primitives);
+            }
+        }
     }
 }
