@@ -88,5 +88,35 @@ namespace TextualRealityGameBookCreator.Tests.Unit
 
             Assert.AreEqual("Invalid attribute found in section on line 10 <wibble>.", parser.ErrorList[0]);
         }
+
+
+        [TestMethod]
+        public void LoadExample1Loads3Sections()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example1.gbc");
+
+            Assert.IsNotNull(book);
+            Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
+            Assert.AreEqual(3, book.CountSections);
+
+            Assert.IsTrue(book.SectionExists("prologue"));
+            IBookSection prologue = book.GetSection("prologue");
+            Assert.AreEqual(3, prologue.Count);
+            Assert.AreEqual("This is the prologue to the book.", ((Paragraph)prologue.Primitives[0]).Text);
+            Assert.AreEqual("./image.jpg", ((Image)prologue.Primitives[1]).FileName);
+            Assert.AreEqual("This is the second paragraph of the prologue.", ((Paragraph)prologue.Primitives[2]).Text);
+
+            Assert.IsTrue(book.SectionExists("dedication"));
+            IBookSection dedication = book.GetSection("dedication");
+            Assert.AreEqual(1, dedication.Count);
+            Assert.AreEqual("This book is dedicated to Amanda, Amy and Daniel.", ((Paragraph)dedication.Primitives[0]).Text);
+
+            Assert.IsTrue(book.SectionExists("rules"));
+            IBookSection rules = book.GetSection("rules");
+            Assert.AreEqual(1, rules.Count);
+            Assert.AreEqual("Navigate through the book by making decisions at the decision points which will make you turn to different paragraphs.", ((Paragraph)rules.Primitives[0]).Text);
+
+        }
     }
 }
