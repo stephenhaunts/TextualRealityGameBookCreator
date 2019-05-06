@@ -136,44 +136,7 @@ namespace TextualRealityGameBookCreator
             switch (_parserState)
             {
                 case ParserState.OutsideDefine:
-                    if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
-                    {
-                        // remove 'define' from start of line
-                        var removeDefine = strippedLine.Substring("define".Length).TrimStart(' ');
-
-                        // check if this define is a bookname
-                        if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))
-                        {
-                            ProcessBookName(strippedLine, removeDefine);
-                            return;
-                        }
-
-                        // check if this define is a section
-                        if (removeDefine.ToLower().StartsWith("section", StringComparison.Ordinal))
-                        {
-                            ProcessSection(strippedLine, removeDefine);
-                            return;
-                        }
-
-                        // check if this define is a section
-                        if (removeDefine.ToLower().StartsWith("contents", StringComparison.Ordinal))
-                        {
-                            if (_book.GetContents().Count == 0)
-                            {
-                                ProcessContents(strippedLine, removeDefine);
-                                return;
-                            }
-
-                            ErrorAndThrow("Duplicate contents section found on line " + _lineCounter + ".");
-
-                        }
-
-                        ErrorAndThrow("Invalid definition name found on line "  + _lineCounter + " <" + strippedLine + ">.");
-                    }
-                    else
-                    {
-                        ErrorAndThrow("'define' keyword expcted but found on line "  + _lineCounter + " <" + strippedLine + ">.");
-                    }
+                    ProcessOutsideBlocks(strippedLine);
                     break;
                 case ParserState.Section:
                     ProcessInsideSection(strippedLine);
