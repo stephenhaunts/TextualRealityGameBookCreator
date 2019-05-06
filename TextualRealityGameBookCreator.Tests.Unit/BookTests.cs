@@ -107,6 +107,10 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             IBook book = new Book();
             book.AddSection(section);
             book.AddSection(section2);
+
+            book.GetContents().Add("Prologue");
+            book.GetContents().Add("Rules");
+
             return book;
         }
 
@@ -126,6 +130,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             section.Add(prologue2);
 
             IBook book = new Book();
+
             book.AddSection(section);
         }
 
@@ -229,6 +234,15 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             IBook book = BookWithTwoSections();
 
             Assert.IsFalse(book.SectionExists("DoesntExist"));
+        }
+
+        [TestMethod]
+        public void GetContentsReturnsContentsBlock()
+        {
+            IBook book = BookWithTwoSections();
+
+            Assert.IsNotNull(book.GetContents());
+            Assert.AreEqual(2, book.GetContents().Count);
         }
     }
 }

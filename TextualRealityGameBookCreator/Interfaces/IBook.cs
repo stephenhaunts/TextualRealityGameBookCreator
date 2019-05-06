@@ -32,5 +32,6 @@ namespace TextualRealityGameBookCreator.Interfaces
         bool SectionExists(string sectionName);
         int CountSections { get; }
         IBookSection GetSection(string sectionName);
+        IBookContents GetContents();
     }
 }

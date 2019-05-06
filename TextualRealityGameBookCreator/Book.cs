@@ -30,11 +30,13 @@ namespace TextualRealityGameBookCreator
     public class Book : IBook
     {
         private readonly Dictionary<string, IBookSection> _bookSections;
+        private readonly IBookContents _bookContents;
 
         public Book()
         {
             BookName = string.Empty;
             _bookSections = new Dictionary<string, IBookSection>();
+            _bookContents = new BookContents();
         }
 
         public string BookName { get; set; }
@@ -85,6 +87,11 @@ namespace TextualRealityGameBookCreator
             }
 
             _bookSections.Add(section.Name.ToLower(), section);
+        }
+
+        public IBookContents GetContents()
+        {
+            return _bookContents;
         }
     }
 }
