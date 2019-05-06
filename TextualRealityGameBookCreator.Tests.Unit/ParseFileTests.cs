@@ -89,7 +89,6 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.AreEqual("Invalid attribute found in section on line 10 <wibble>.", parser.ErrorList[0]);
         }
 
-
         [TestMethod]
         public void LoadExample1Loads3Sections()
         {
