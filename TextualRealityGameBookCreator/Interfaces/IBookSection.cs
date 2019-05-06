@@ -31,5 +31,7 @@ namespace TextualRealityGameBookCreator.Interfaces
     {
         string Name { get; }
         ReadOnlyCollection<ISectionPrimitive> Primitives { get; }
+        void Add(ISectionPrimitive primitive);
+        int Count { get; }
     }
 }

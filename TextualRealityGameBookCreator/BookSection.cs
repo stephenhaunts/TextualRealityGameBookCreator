@@ -57,5 +57,23 @@ namespace TextualRealityGameBookCreator
                 return new ReadOnlyCollection<ISectionPrimitive>(_primitives);
             }
         }
+
+        public void Add(ISectionPrimitive primitive)
+        {
+            if (primitive == null)
+            {
+                throw new ArgumentNullException(nameof(primitive));
+            }
+
+            _primitives.Add(primitive);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return _primitives.Count;
+            }
+        }
     }
 }
