@@ -47,6 +47,11 @@ namespace TextualRealityGameBookCreator
             }
         }
 
+        public bool SectionExists(string sectionName)
+        {
+            return _bookSections.ContainsKey(sectionName.ToLower());
+        }
+
         public IBookSection GetSection(string sectionName)
         {
             if (string.IsNullOrEmpty(sectionName))

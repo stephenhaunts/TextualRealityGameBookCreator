@@ -23,19 +23,18 @@ SOFTWARE.
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityGameBookCreator.Interfaces;
+using TextualRealityGameBookCreator.SectionPrimitives;
 
 namespace TextualRealityGameBookCreator.Tests.Unit
 {
     [TestClass]
     public class ParseFileTests
     {
-        const string EXAMPLE1 = "/Examples/Example1 - BookName Only.gbc";
-
         [TestMethod]
         public void LoadExampleFileLoadsNonEmptyFileAndReturnsArrayOfLines()
         {
             IParseFile parser = new ParseFile();
-            var book = parser.Parse(EXAMPLE1);
+            var book = parser.Parse("/Examples/Example1 - BookName Only.gbc");
 
             Assert.IsNotNull(book);
             Assert.IsTrue(parser.RawFile.Count > 0);
@@ -45,7 +44,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
         public void LoadExample1AndSetBookName()
         {
             IParseFile parser = new ParseFile();
-            var book = parser.Parse(EXAMPLE1);
+            var book = parser.Parse("/Examples/Example1 - BookName Only.gbc");
 
             Assert.IsNotNull(book);
             Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
@@ -59,7 +58,26 @@ namespace TextualRealityGameBookCreator.Tests.Unit
 
             Assert.IsNotNull(book);
             Assert.IsTrue(parser.ErrorList.Count == 1);
-            Assert.AreEqual("Invalid definition name found <define wibble : The Strangest Pirate Story in the Galaxy!>.", parser.ErrorList[0]);
+            Assert.AreEqual("Invalid definition name found on line 2 <define wibble : The Strangest Pirate Story in the Galaxy!>.", parser.ErrorList[0]);
+        }
+
+        [TestMethod]
+        public void LoadExample1AndSetBookNameAndOneSection()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example1 - BookName and Single Section.gbc");
+
+            Assert.IsNotNull(book);
+            Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
+            Assert.AreEqual(1, book.CountSections);
+            Assert.IsTrue(book.SectionExists("prologue"));
+
+          
+            IBookSection prologue = book.GetSection("prologue");
+            Assert.AreEqual(3, prologue.Count);
+            Assert.AreEqual("This is the prologue to the book.", ((Paragraph)prologue.Primitives[0]).Text);
+            Assert.AreEqual("./image.jpg", ((Image)prologue.Primitives[1]).FileName);
+            Assert.AreEqual("This is the second paragraph of the prologue.", ((Paragraph)prologue.Primitives[2]).Text);
         }
     }
 }

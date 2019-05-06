@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using TextualRealityGameBookCreator.Interfaces;
+using TextualRealityGameBookCreator.SectionPrimitives;
 
 namespace TextualRealityGameBookCreator
 {
@@ -45,6 +46,7 @@ namespace TextualRealityGameBookCreator
         private List<string> _errors;
         private int _lineCounter = 0;
         private ParserState _parserState = ParserState.OutsideDefine;
+        private IBookSection _currentParsedSection;
 
         public ParseFile()
         {
@@ -93,7 +95,7 @@ namespace TextualRealityGameBookCreator
                         continue;
                     }
 
-                    ProcessDefineSections(strippedLine);
+                    ProcessDefine(strippedLine);
                 }
             }
             catch (InvalidOperationException)
@@ -129,26 +131,109 @@ namespace TextualRealityGameBookCreator
             return false;
         }
 
-        private void ProcessDefineSections(string strippedLine)
+        private void ProcessDefine(string strippedLine)
         {
-            if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
+            switch (_parserState)
             {
-                // remove 'define' from start of line
-                var removeDefine = strippedLine.Substring("define".Length).TrimStart(' ');
+                case ParserState.OutsideDefine:
+                    if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
+                    {
+                        // remove 'define' from start of line
+                        var removeDefine = strippedLine.Substring("define".Length).TrimStart(' ');
 
-                // check if this define is a bookname
-                if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))
+                        // check if this define is a bookname
+                        if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))
+                        {
+                            ProcessBookName(strippedLine, removeDefine);
+                            return;
+                        }
+
+                        // check if this define is a section
+                        if (removeDefine.ToLower().StartsWith("section", StringComparison.Ordinal))
+                        {
+                            ProcessSection(strippedLine, removeDefine);
+                            return;
+                        }
+
+                        ErrorAndThrow("Invalid definition name found on line "  + _lineCounter + " <" + strippedLine + ">.");
+                    }
+                    else
+                    {
+                        ErrorAndThrow("'define' keyword expcted but found on line "  + _lineCounter + " <" + strippedLine + ">.");
+                    }
+                    break;
+                case ParserState.Section:
+                    ProcessInsideSection(strippedLine);
+                    break;
+            }
+
+        }
+
+        private void ProcessInsideSection(string strippedLine)
+        {
+            if (strippedLine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
+            {
+                string[] split = strippedLine.Split('=');
+
+                if (split.Length != 2)
                 {
-                    ProcessBookName(strippedLine, removeDefine);
+                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
                 }
 
-                ErrorAndThrow("Invalid definition name found <" + strippedLine + ">.");
+                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+                if (firstToken == ("paragraph"))
+                {
+                    ISectionPrimitive paragraph = new Paragraph(split[1].TrimStart(' '));
+                    _currentParsedSection.Add(paragraph);
+
+                }
+                return;
             }
-            else
+
+            if (strippedLine.ToLower().StartsWith("image", StringComparison.Ordinal))
             {
-                ErrorAndThrow("'define' keyword expcted but found <" + strippedLine + ">.");
+                string[] split = strippedLine.Split('=');
+
+                if (split.Length != 2)
+                {
+                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+                }
+
+                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+                if (firstToken == ("image"))
+                {
+                    ISectionPrimitive paragraph = new Image(split[1].TrimStart(' '));
+                    _currentParsedSection.Add(paragraph);
+
+                }
+                return;
+            }
+
+            ErrorAndThrow("Invalid paragraph definition found on line " + _lineCounter + " <" + strippedLine + ">.");
+
+        }
+
+        private void ProcessSection(string strippedLine, string removeDefine)
+        {
+            _parserState = ParserState.Section;
+
+            string[] split = removeDefine.Split(':');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            if (firstToken == ("section"))
+            {
+                IBookSection section = new BookSection(split[1].TrimStart(' '));
+                _currentParsedSection = section;
+                _book.AddSection(section);
             }
         }
+
+
 
         private void ProcessBookName(string strippedLine, string removeDefine)
         {

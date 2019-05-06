@@ -121,6 +121,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             ISectionPrimitive prologue2 = new Paragraph(PROLOGUE2);
 
             IBookSection section = new BookSection();
+
             section.Add(prologue);
             section.Add(prologue2);
 
@@ -212,6 +213,22 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             };
 
             Assert.AreEqual("Star Wars", book.BookName);
+        }
+
+        [TestMethod]
+        public void SectionExistsReturnsTrueIfSectionExists()
+        {
+            IBook book = BookWithTwoSections();
+
+            Assert.IsTrue(book.SectionExists("Prologue"));
+        }
+
+        [TestMethod]
+        public void SectionExistsReturnsFalseIfSectionDoesntExists()
+        {
+            IBook book = BookWithTwoSections();
+
+            Assert.IsFalse(book.SectionExists("DoesntExist"));
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿define bookname : The Strangest Pirate Story in the Galaxy!
+
+//
+// Prologue section that explains what the book is.
+//
+define section : prologue
+   paragraph = This is the prologue to the book.
+   image = ./image.jpg
+   paragraph = This is the second paragraph of the prologue.
+end prologue

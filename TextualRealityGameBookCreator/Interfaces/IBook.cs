@@ -29,6 +29,7 @@ namespace TextualRealityGameBookCreator.Interfaces
     {
         string BookName { get; set;}
         void AddSection(IBookSection section);
+        bool SectionExists(string sectionName);
         int CountSections { get; }
         IBookSection GetSection(string sectionName);
     }
