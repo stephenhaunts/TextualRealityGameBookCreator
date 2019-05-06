@@ -72,12 +72,21 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.AreEqual(1, book.CountSections);
             Assert.IsTrue(book.SectionExists("prologue"));
 
-          
+
             IBookSection prologue = book.GetSection("prologue");
             Assert.AreEqual(3, prologue.Count);
             Assert.AreEqual("This is the prologue to the book.", ((Paragraph)prologue.Primitives[0]).Text);
             Assert.AreEqual("./image.jpg", ((Image)prologue.Primitives[1]).FileName);
             Assert.AreEqual("This is the second paragraph of the prologue.", ((Paragraph)prologue.Primitives[2]).Text);
+        }
+
+        [TestMethod]
+        public void LoadExample1ReportErrorForInvalidAttributeInSection()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example1 - Invalid attribute in section.gbc");
+
+            Assert.AreEqual("Invalid attribute found in section on line 10 <wibble>.", parser.ErrorList[0]);
         }
     }
 }

@@ -209,7 +209,13 @@ namespace TextualRealityGameBookCreator
                 return;
             }
 
-            ErrorAndThrow("Invalid paragraph definition found on line " + _lineCounter + " <" + strippedLine + ">.");
+            if (strippedLine.ToLower().StartsWith("end", StringComparison.Ordinal))
+            {
+                _parserState = ParserState.OutsideDefine;
+                return;
+            }
+
+            ErrorAndThrow("Invalid attribute found in section on line " + _lineCounter + " <" + strippedLine + ">.");
 
         }
 
