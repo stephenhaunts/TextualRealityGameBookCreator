@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityGameBookCreator.Interfaces;
+using TextualRealityGameBookCreator.Parser;
 using TextualRealityGameBookCreator.SectionPrimitives;
 
 namespace TextualRealityGameBookCreator.Tests.Unit

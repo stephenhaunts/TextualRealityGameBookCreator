@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 using System;
-namespace TextualRealityGameBookCreator
+namespace TextualRealityGameBookCreator.Parser
 {
     public partial class ParseFile
     {

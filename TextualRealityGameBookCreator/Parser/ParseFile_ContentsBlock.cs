@@ -23,28 +23,26 @@ SOFTWARE.
 */
 
 using System;
-namespace TextualRealityGameBookCreator
+namespace TextualRealityGameBookCreator.Parser
 {
     public partial class ParseFile
     {
-        private void ProcessBookName(string strippedLine, string removeDefine)
+        private void ProcessInsideContents(string strippedLine)
         {
-            _parserState = ParserState.BookName;
-
-            string[] split = removeDefine.Split(':');
-
-            if (split.Length != 2)
+            if (strippedLine.ToLower().StartsWith("end", StringComparison.Ordinal))
             {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+                _parserState = ParserState.OutsideDefine;
+                return;
             }
 
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
-            if (firstToken == ("bookname"))
-            {
-                _book.BookName = split[1].TrimStart(' ');
-            }
-
-            _parserState = ParserState.OutsideDefine;
+            _book.GetContents().Add(strippedLine);
         }
+
+
+        private void ProcessContents(string strippedLine, string removeDefine)
+        {
+            _parserState = ParserState.Contents;
+        }
+
     }
 }

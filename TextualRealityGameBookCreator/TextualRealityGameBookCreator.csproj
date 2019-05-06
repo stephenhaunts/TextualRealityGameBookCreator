@@ -7,5 +7,6 @@
   <ItemGroup>
     <Folder Include="Section Primitives\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Parser\" />
   </ItemGroup>
 </Project>

@@ -26,7 +26,7 @@ using System;
 using TextualRealityGameBookCreator.Interfaces;
 using TextualRealityGameBookCreator.SectionPrimitives;
 
-namespace TextualRealityGameBookCreator
+namespace TextualRealityGameBookCreator.Parser
 {
     public partial class ParseFile
     {
