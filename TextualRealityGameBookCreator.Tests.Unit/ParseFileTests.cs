@@ -21,8 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityGameBookCreator.Interfaces;
 
@@ -31,7 +29,6 @@ namespace TextualRealityGameBookCreator.Tests.Unit
     [TestClass]
     public class ParseFileTests
     {
-        //const string EXAMPLES_PATH = "/Examples";
         const string EXAMPLE1 = "/Examples/Game Book Example.gbc";
 
         [TestMethod]
