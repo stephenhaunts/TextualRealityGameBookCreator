@@ -22,27 +22,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
 using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator
 {
     public class ParseFile : IParseFile
     {
+        List<string> _rawFile;
+
         public ParseFile()
         {
-
+            _rawFile = new List<string>(); 
         }
 
-        public IBook Parse(string[] file)
+        public ReadOnlyCollection<string> RawFile
         {
-            throw new NotImplementedException();
+            get
+            {
+                return new ReadOnlyCollection<string>(_rawFile);
+            }
+        }
+
+        public IBook Parse(List<string> rawFile)
+        {
+            return new Book();
         }
 
         public IBook Parse(string fileName)
         {
-            throw new NotImplementedException();
+            var path = Path.GetFullPath(Environment.CurrentDirectory);
+            var fullFilename = Path.GetFullPath(path + fileName);
+
+            if (File.Exists(fullFilename))
+            { 
+                _rawFile = new List<string>(File.ReadAllLines(fullFilename));
+
+                return Parse(_rawFile);
+            }
+
+            throw new FileNotFoundException("Input file not found.", fileName);
         }
 
-      
+
     }
 }

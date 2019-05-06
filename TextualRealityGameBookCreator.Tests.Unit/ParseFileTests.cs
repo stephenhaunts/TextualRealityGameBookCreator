@@ -24,35 +24,24 @@ SOFTWARE.
 using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator.Tests.Unit
 {
     [TestClass]
-    public class ParseFile
+    public class ParseFileTests
     {
-        const string EXAMPLES_PATH = "/Examples";
-        const string EXAMPLE1 = "/Game Book Example.gbc";
+        //const string EXAMPLES_PATH = "/Examples";
+        const string EXAMPLE1 = "/Examples/Game Book Example.gbc";
 
         [TestMethod]
         public void LoadExampleFileLoadsNonEmptyFileAndReturnsArrayOfLines()
         {
-            var file = LoadExampleFile(EXAMPLE1);
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse(EXAMPLE1);
 
-            Assert.IsNotNull(file);
-            Assert.IsTrue(file.Length > 0);
-        }
-
-        private static string[] LoadExampleFile(string filename)
-        {
-            var path = Path.GetFullPath(Environment.CurrentDirectory + EXAMPLES_PATH);
-            var fullFilename = Path.GetFullPath(path + filename);
-
-            if (File.Exists(fullFilename))
-            {
-                return File.ReadAllLines(fullFilename);
-            }
-
-            return null;
+            Assert.IsNotNull(book);
+            Assert.IsTrue(parser.RawFile.Count > 0);
         }
     }
 }

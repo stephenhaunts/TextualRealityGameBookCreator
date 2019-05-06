@@ -22,12 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TextualRealityGameBookCreator.Interfaces
 {
     public interface IParseFile
     {
-        IBook Parse(string[] file);
+        IBook Parse(List<string> rawFile);
         IBook Parse(string fileName);
+        ReadOnlyCollection<string> RawFile { get; }
     }
 }
