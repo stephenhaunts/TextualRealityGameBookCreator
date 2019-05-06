@@ -63,27 +63,42 @@ namespace TextualRealityGameBookCreator
             }
         }
 
+        public ReadOnlyCollection<string> ErrorList
+        {
+            get
+            {
+                return new ReadOnlyCollection<string>(_errors);
+            }
+        }
+
         public IBook Parse(List<string> rawFile)
         {
             _book = new Book();
-
-            foreach (var line in _rawFile)
+            try
             {
-                _lineCounter++;
-                // TODO: Look for more complete way of stripping whitepace from the front.
-                var strippedLine = line.TrimStart(' ');
-
-                if (string.IsNullOrEmpty(strippedLine))
+                foreach (var line in _rawFile)
                 {
-                    continue;
-                }
+                    _lineCounter++;
 
-                if (CheckForComments(strippedLine))
-                {
-                    continue;
-                }
+                    // TODO: Look for more complete way of stripping whitepace from the front.
+                    var strippedLine = line.TrimStart(' ');
 
-                ProcessDefineSections(strippedLine);
+                    if (string.IsNullOrEmpty(strippedLine))
+                    {
+                        continue;
+                    }
+
+                    if (CheckForComments(strippedLine))
+                    {
+                        continue;
+                    }
+
+                    ProcessDefineSections(strippedLine);
+                }
+            }
+            catch (InvalidOperationException)
+            {
+
             }
 
             return _book;
@@ -126,6 +141,8 @@ namespace TextualRealityGameBookCreator
                 {
                     ProcessBookName(strippedLine, removeDefine);
                 }
+
+                ErrorAndThrow("Invalid definition name found <" + strippedLine + ">.");
             }
             else
             {

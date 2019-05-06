@@ -18,6 +18,7 @@
   <ItemGroup>
     <None Remove="Examples\Game Book Example.gbc" />
     <None Remove="Examples\Example1 %28copy%29.gbc" />
+    <None Remove="Examples\Example1 - BookName Only %28copy%29.gbc" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Examples\Game Book Example %28copy%29.gbc">
@@ -39,6 +40,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\Example1 - BookName Only.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example1 - Invalid definition name.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

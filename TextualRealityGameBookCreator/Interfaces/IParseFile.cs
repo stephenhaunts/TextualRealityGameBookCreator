@@ -32,5 +32,6 @@ namespace TextualRealityGameBookCreator.Interfaces
         IBook Parse(List<string> rawFile);
         IBook Parse(string fileName);
         ReadOnlyCollection<string> RawFile { get; }
+        ReadOnlyCollection<string> ErrorList { get; }
     }
 }

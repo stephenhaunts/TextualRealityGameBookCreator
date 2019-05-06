@@ -50,5 +50,16 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.IsNotNull(book);
             Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
         }
+
+        [TestMethod]
+        public void LoadExample1ReportErrorsForInvalidDefinitionName()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example1 - Invalid definition name.gbc");
+
+            Assert.IsNotNull(book);
+            Assert.IsTrue(parser.ErrorList.Count == 1);
+            Assert.AreEqual("Invalid definition name found <define wibble : The Strangest Pirate Story in the Galaxy!>.", parser.ErrorList[0]);
+        }
     }
 }

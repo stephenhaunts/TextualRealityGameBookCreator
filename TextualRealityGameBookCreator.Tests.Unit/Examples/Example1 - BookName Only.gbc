@@ -1,1 +1,3 @@
-﻿define bookname : The Strangest Pirate Story in the Galaxy!
+﻿// This example has a book name only
+define bookname : The Strangest Pirate Story in the Galaxy!
+
