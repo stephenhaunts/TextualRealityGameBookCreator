@@ -66,7 +66,6 @@ namespace TextualRealityGameBookCreator.Parser
                 {
                     ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
                     _currentParsedSection.Add(paragraph);
-
                 }
                 return;
             }
@@ -85,7 +84,6 @@ namespace TextualRealityGameBookCreator.Parser
                 {
                     ISectionPrimitive paragraph = new Image(split[1].Trim());
                     _currentParsedSection.Add(paragraph);
-
                 }
                 return;
             }
