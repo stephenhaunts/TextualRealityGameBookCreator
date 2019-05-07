@@ -32,7 +32,7 @@ namespace TextualRealityGameBookCreator.Parser
             if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
             {
                 // remove 'define' from start of line
-                var removeDefine = strippedLine.Substring("define".Length).TrimStart(' ');
+                var removeDefine = strippedLine.Substring("define".Length).Trim();
 
                 // check if this define is a bookname
                 if (removeDefine.ToLower().StartsWith("bookname", StringComparison.Ordinal))

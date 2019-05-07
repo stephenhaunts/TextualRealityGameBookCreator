@@ -38,10 +38,10 @@ namespace TextualRealityGameBookCreator.Parser
                 ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
             }
 
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            var firstToken = split[0].Trim().ToLower();
             if (firstToken == ("bookname"))
             {
-                _book.BookName = split[1].TrimStart(' ');
+                _book.BookName = split[1].Trim();
             }
 
             _parserState = ParserState.OutsideDefine;

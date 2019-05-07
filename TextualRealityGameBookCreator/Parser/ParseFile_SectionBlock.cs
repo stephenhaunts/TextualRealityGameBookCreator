@@ -41,10 +41,10 @@ namespace TextualRealityGameBookCreator.Parser
                 ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
             }
 
-            var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+            var firstToken = split[0].Trim().ToLower();
             if (firstToken == ("section"))
             {
-                IBookSection section = new BookSection(split[1].TrimStart(' '));
+                IBookSection section = new BookSection(split[1].Trim());
                 _currentParsedSection = section;
                 _book.AddSection(section);
             }
@@ -61,10 +61,10 @@ namespace TextualRealityGameBookCreator.Parser
                     ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
                 }
 
-                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+                var firstToken = split[0].Trim().ToLower();
                 if (firstToken == ("paragraph"))
                 {
-                    ISectionPrimitive paragraph = new Paragraph(split[1].TrimStart(' '));
+                    ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
                     _currentParsedSection.Add(paragraph);
 
                 }
@@ -80,10 +80,10 @@ namespace TextualRealityGameBookCreator.Parser
                     ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
                 }
 
-                var firstToken = split[0].TrimStart(' ').TrimEnd(' ').ToLower();
+                var firstToken = split[0].Trim().ToLower();
                 if (firstToken == ("image"))
                 {
-                    ISectionPrimitive paragraph = new Image(split[1].TrimStart(' '));
+                    ISectionPrimitive paragraph = new Image(split[1].Trim());
                     _currentParsedSection.Add(paragraph);
 
                 }

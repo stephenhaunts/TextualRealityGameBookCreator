@@ -74,7 +74,7 @@ namespace TextualRealityGameBookCreator.Parser
                     _lineCounter++;
 
                     // TODO: Look for more complete way of stripping whitepace from the front.
-                    var strippedLine = line.TrimStart(' ');
+                    var strippedLine = line.Trim();
 
                     if (string.IsNullOrEmpty(strippedLine))
                     {
