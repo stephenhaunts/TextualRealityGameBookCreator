@@ -30,12 +30,16 @@ namespace TextualRealityGameBookCreator
     public class Book : IBook
     {
         private readonly Dictionary<string, IBookSection> _bookSections;
+        private readonly Dictionary<string, IBookParagraph> _bookParagraph;
+
         private readonly IBookContents _bookContents;
 
         public Book()
         {
             BookName = string.Empty;
             _bookSections = new Dictionary<string, IBookSection>();
+            _bookParagraph = new Dictionary<string, IBookParagraph>();
+
             _bookContents = new BookContents();
         }
 
@@ -88,6 +92,61 @@ namespace TextualRealityGameBookCreator
 
             _bookSections.Add(section.Name.ToLower(), section);
         }
+
+
+
+
+
+        public int CountParagraph
+        {
+            get
+            {
+                return _bookParagraph.Count;
+            }
+        }
+
+        public bool ParagraphExists(string paragraphName)
+        {
+            return _bookParagraph.ContainsKey(paragraphName.ToLower());
+        }
+
+        public IBookParagraph GetParagraph(string paragraphName)
+        {
+            if (string.IsNullOrEmpty(paragraphName))
+            {
+                throw new ArgumentNullException(paragraphName);
+            }
+
+            if (!_bookParagraph.ContainsKey(paragraphName.ToLower()))
+            {
+                throw new InvalidOperationException("A book paragraph of the name >" + paragraphName.ToLower() + "> does not exist.");
+            }
+
+            return _bookParagraph[paragraphName.ToLower()];
+        }
+
+        public void AddParagraph(IBookParagraph paragraph)
+        {
+            if (paragraph == null)
+            {
+                throw new ArgumentNullException(nameof(paragraph));
+            }
+
+            if (string.IsNullOrEmpty(paragraph.Name))
+            {
+                throw new InvalidOperationException("Paragraph name can not be null or empty.");
+            }
+
+            if (_bookParagraph.ContainsKey(paragraph.Name.ToLower()))
+            {
+                throw new InvalidOperationException("A book paragraph of the name >" + paragraph.Name.ToLower() + "> already exists in the book.");
+            }
+
+            _bookParagraph.Add(paragraph.Name.ToLower(), paragraph);
+        }
+
+
+
 
         public IBookContents GetContents()
         {

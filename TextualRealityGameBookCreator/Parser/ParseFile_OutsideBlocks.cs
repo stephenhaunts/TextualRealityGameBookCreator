@@ -49,6 +49,13 @@ namespace TextualRealityGameBookCreator.Parser
                 }
 
                 // check if this define is a section
+                if (removeDefine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
+                {
+                    ProcessParagraph(strippedLine, removeDefine);
+                    return;
+                }
+
+                // check if this define is a section
                 if (removeDefine.ToLower().StartsWith("contents", StringComparison.Ordinal))
                 {
                     if (_book.GetContents().Count == 0)

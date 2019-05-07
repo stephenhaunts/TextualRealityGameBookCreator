@@ -35,8 +35,8 @@ define paragraph : start
    image = ./image.jpg
    paragraph = What will you do?.
    
-   choice.left = Take the left hand path.
-   choice.right = Take the right hand path.
+//   choice.left = Take the left hand path.
+//   choice.right = Take the right hand path.
 end
 
 define paragraph :left
@@ -44,27 +44,27 @@ define paragraph :left
    image = ./image.jpg
    paragraph = What will you do?.
    
-   choice.talktoman = Ask the old man how to get to the castle.
-   choice.takepath = Ignore the old man and continue down the path.
+ //  choice.talktoman = Ask the old man how to get to the castle.
+ //  choice.takepath = Ignore the old man and continue down the path.
 end
 
 define paragraph : right
    paragraph = "You are eaten by an ogre with big teeth that are dripping blood onto the floor. You can start the quest again.
    image = ./image.jpg
    paragraph = What will you do?.
-   death.start
+ //  death.start
 end
 
 define paragraph : talktoman
    paragraph = "The old man looks at you agitated and then pulls out a knife that he plunges into your heart. As the life drains out of your body, you stare into his cold, dead, eyes. He cackles to himself as he licks the blood from his knife.
    image = ./image.jpg
    paragraph = What will you do?.
-   death.start
+//   death.start
 end
 
 define paragraph : takepath
    paragraph = "You walk down the path for what feels like hours and arrive at the gates of a castle. There is a bell next to the gate.
-   choice.ringbell = Ring the bell.
-   choice.left = Retreat from the castle and go back down the pathway.
-   win.start
+//   choice.ringbell = Ring the bell.
+//   choice.left = Retreat from the castle and go back down the pathway.
+//   win.start
 end

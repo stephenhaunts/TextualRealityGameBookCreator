@@ -38,6 +38,7 @@ namespace TextualRealityGameBookCreator.Parser
         private int _lineCounter = 0;
         private ParserState _parserState = ParserState.OutsideDefine;
         private IBookSection _currentParsedSection;
+        private IBookParagraph _currentParsedParagraph;
 
         public ParseFile()
         {
@@ -89,10 +90,8 @@ namespace TextualRealityGameBookCreator.Parser
                     ProcessDefine(strippedLine);
                 }
             }
-            catch (InvalidOperationException)
-            {
-
-            }
+            catch (InvalidOperationException) { }
+           
 
             return _book;
         }
@@ -131,6 +130,9 @@ namespace TextualRealityGameBookCreator.Parser
                     break;
                 case ParserState.Section:
                     ProcessInsideSection(strippedLine);
+                    break;                         
+                case ParserState.Paragraph:
+                    ProcessInsideParagraph(strippedLine);
                     break;
                 case ParserState.Contents:
                     ProcessInsideContents(strippedLine);
