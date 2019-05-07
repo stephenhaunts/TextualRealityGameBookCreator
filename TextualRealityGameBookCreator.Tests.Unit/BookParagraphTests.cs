@@ -129,5 +129,60 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.AreEqual(IMAGE, ((Image)paragraph.Primitives[1]).FileName);
             Assert.AreEqual(TEXT2, ((Paragraph)paragraph.Primitives[2]).Text);
         }
+
+
+        [TestMethod]
+        public void NewParagraphHasZeroChoices()
+        {
+            IBookParagraph paragraph = new BookParagraph("Paragraph");
+
+            Assert.AreEqual(0, paragraph.ChoicesCount);
+        }
+
+        [TestMethod]
+        public void AddChoiceToParagraph()
+        {
+            IBookParagraph paragraph = new BookParagraph("Paragraph");
+
+            IChoice choice = new Choice
+            {
+                LinkToId = "TalkToMan",
+                LinkTo = new BookParagraph()
+            };
+
+            paragraph.Add(choice);
+
+            Assert.AreEqual(1, paragraph.ChoicesCount);
+            Assert.AreEqual("TalkToMan", paragraph.Choices[0].LinkToId);
+            Assert.IsNotNull(paragraph.Choices[0].LinkTo);
+        }
+
+        [TestMethod]
+        public void AddChoicesToParagraph()
+        {
+            IBookParagraph paragraph = new BookParagraph("Paragraph");
+
+            IChoice choice = new Choice
+            {
+                LinkToId = "TalkToMan",
+                LinkTo = new BookParagraph()
+            };
+
+            IChoice choice2 = new Choice
+            {
+                LinkToId = "RingBell",
+                LinkTo = new BookParagraph()
+            };
+
+            paragraph.Add(choice);
+            paragraph.Add(choice2);
+
+            Assert.AreEqual(2, paragraph.ChoicesCount);
+            Assert.AreEqual("TalkToMan", paragraph.Choices[0].LinkToId);
+            Assert.IsNotNull(paragraph.Choices[0].LinkTo);
+
+            Assert.AreEqual("RingBell", paragraph.Choices[1].LinkToId);
+            Assert.IsNotNull(paragraph.Choices[1].LinkTo);
+        }
     }
 }

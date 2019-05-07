@@ -160,5 +160,42 @@ namespace TextualRealityGameBookCreator.Tests.Unit
 
             Assert.AreEqual("Duplicate contents section found on line 32.", parser.ErrorList[0]);
         }
+
+        [TestMethod]
+        public void LoadExample3()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example3.gbc");
+
+            Assert.IsNotNull(book);
+            Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
+            Assert.AreEqual(3, book.CountSections);
+
+            Assert.IsTrue(book.SectionExists("prologue"));
+            IBookSection prologue = book.GetSection("prologue");
+            Assert.AreEqual(3, prologue.Count);
+            Assert.AreEqual("This is the prologue to the book.", ((Paragraph)prologue.Primitives[0]).Text);
+            Assert.AreEqual("./image.jpg", ((Image)prologue.Primitives[1]).FileName);
+            Assert.AreEqual("This is the second paragraph of the prologue.", ((Paragraph)prologue.Primitives[2]).Text);
+
+            Assert.IsTrue(book.SectionExists("dedication"));
+            IBookSection dedication = book.GetSection("dedication");
+            Assert.AreEqual(1, dedication.Count);
+            Assert.AreEqual("This book is dedicated to Amanda, Amy and Daniel.", ((Paragraph)dedication.Primitives[0]).Text);
+
+            Assert.IsTrue(book.SectionExists("rules"));
+            IBookSection rules = book.GetSection("rules");
+            Assert.AreEqual(1, rules.Count);
+            Assert.AreEqual("Navigate through the book by making decisions at the decision points which will make you turn to different paragraphs.", ((Paragraph)rules.Primitives[0]).Text);
+
+            Assert.AreEqual(4, book.GetContents().Count);
+            Assert.IsTrue(book.GetContents().Exists("Prologue"));
+            Assert.IsTrue(book.GetContents().Exists("Dedication"));
+            Assert.IsTrue(book.GetContents().Exists("Rules"));
+            Assert.IsTrue(book.GetContents().Exists("Start"));
+
+            Assert.AreEqual(5, book.CountParagraph);
+
+        }
     }
 }

@@ -32,11 +32,13 @@ namespace TextualRealityGameBookCreator
     {
         public string Name { get; private set; }
         private List<ISectionPrimitive> _primitives;
+        private List<IChoice> _choices;
 
         public BookParagraph()
         {
             Name = string.Empty;
             _primitives = new List<ISectionPrimitive>();
+            _choices = new List<IChoice>();
         }
 
         public BookParagraph(string name)
@@ -48,6 +50,7 @@ namespace TextualRealityGameBookCreator
 
             Name = name;
             _primitives = new List<ISectionPrimitive>();
+            _choices = new List<IChoice>();
         }
 
         public ReadOnlyCollection<ISectionPrimitive> Primitives
@@ -75,5 +78,33 @@ namespace TextualRealityGameBookCreator
                 return _primitives.Count;
             }
         }
+
+        public ReadOnlyCollection<IChoice> Choices
+        {
+            get
+            {
+                return new ReadOnlyCollection<IChoice>(_choices);
+            }
+        }
+
+        public void Add(IChoice choices)
+        {
+            if (choices == null)
+            {
+                throw new ArgumentNullException(nameof(choices));
+            }
+
+            _choices.Add(choices);
+        }
+
+        public int ChoicesCount
+        {
+            get
+            {
+                return _choices.Count;
+            }
+        }
+
+
     }
 }

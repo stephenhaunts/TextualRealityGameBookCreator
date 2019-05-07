@@ -21,21 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 using System;
-using System.Collections.ObjectModel;
+using TextualRealityGameBookCreator.Interfaces;
 
-namespace TextualRealityGameBookCreator.Interfaces
+namespace TextualRealityGameBookCreator
 {
-    public interface IBookParagraph
+    public class Choice : IChoice
     {
-        string Name { get; }
-        ReadOnlyCollection<ISectionPrimitive> Primitives { get; }
-        void Add(ISectionPrimitive primitive);
-        int Count { get; }
+        public string LinkToId { get; set; }
+        public IBookParagraph LinkTo { get; set; }
+        public string Text { get; set; }
 
-        ReadOnlyCollection<IChoice> Choices { get; }
-        void Add(IChoice choice);
-        int ChoicesCount { get; }
+        public Choice()
+        {
+            LinkTo = null;
+        }
     }
 }
