@@ -34,14 +34,9 @@ namespace TextualRealityGameBookCreator.Parser
         {
             _parserState = ParserState.Section;
 
-            string[] split = removeDefine.Split(':');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
+            var split = SplitInnerLine(':', removeDefine);
             var firstToken = split[0].Trim().ToLower();
+
             if (firstToken == ("section"))
             {
                 IBookSection section = new BookSection(split[1].Trim());
@@ -54,37 +49,13 @@ namespace TextualRealityGameBookCreator.Parser
         {
             if (strippedLine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
             {
-                string[] split = strippedLine.Split('=');
-
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].Trim().ToLower();
-                if (firstToken == ("paragraph"))
-                {
-                    ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
-                    _currentParsedSection.Add(paragraph);
-                }
+                ExtractSectionParagraph(strippedLine);
                 return;
             }
 
             if (strippedLine.ToLower().StartsWith("image", StringComparison.Ordinal))
             {
-                string[] split = strippedLine.Split('=');
-
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].Trim().ToLower();
-                if (firstToken == ("image"))
-                {
-                    ISectionPrimitive paragraph = new Image(split[1].Trim());
-                    _currentParsedSection.Add(paragraph);
-                }
+                ExtractSectionImage(strippedLine);
                 return;
             }
 
@@ -95,7 +66,31 @@ namespace TextualRealityGameBookCreator.Parser
             }
 
             ErrorAndThrow("Invalid attribute found in section on line " + _lineCounter + " <" + strippedLine + ">.");
+        }
 
+        private void ExtractSectionImage(string strippedLine)
+        {
+            var split = SplitInnerLine('=', strippedLine);
+            var firstToken = split[0].Trim().ToLower();
+
+            if (firstToken == ("image"))
+            {
+                ISectionPrimitive paragraph = new Image(split[1].Trim());
+                _currentParsedSection.Add(paragraph);
+            }
+        }
+
+        private void ExtractSectionParagraph(string strippedLine)
+        {
+            var split = SplitInnerLine('=', strippedLine);
+            var firstToken = split[0].Trim().ToLower();
+
+            if (firstToken == ("paragraph"))
+            {
+                ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
+                _currentParsedSection.Add(paragraph);
+            }
+            return;
         }
     }
 }

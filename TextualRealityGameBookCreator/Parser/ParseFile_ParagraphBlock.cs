@@ -83,15 +83,11 @@ namespace TextualRealityGameBookCreator.Parser
 
         private void ExtractChoice(string strippedLine)
         {
-            string[] split = strippedLine.Split('=');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
+            var split = SplitInnerLine('=', strippedLine);
 
             var firstToken = split[0].Trim().ToLower();
-            string[] choiceSplit = firstToken.Split('.');
+
+            string[] choiceSplit = SplitInnerLine('.', firstToken);
 
             if (choiceSplit[0] == ("choice"))
             {
@@ -106,16 +102,13 @@ namespace TextualRealityGameBookCreator.Parser
             }
         }
 
+
+
         private void ExtractImage(string strippedLine)
         {
-            string[] split = strippedLine.Split('=');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
+            var split = SplitInnerLine('=', strippedLine);
             var firstToken = split[0].Trim().ToLower();
+
             if (firstToken == ("image"))
             {
                 ISectionPrimitive paragraph = new Image(split[1].Trim());
@@ -125,14 +118,9 @@ namespace TextualRealityGameBookCreator.Parser
 
         private void ExtractParagraph(string strippedLine)
         {
-            string[] split = strippedLine.Split('=');
-
-            if (split.Length != 2)
-            {
-                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-            }
-
+            var split = SplitInnerLine('=', strippedLine);
             var firstToken = split[0].Trim().ToLower();
+
             if (firstToken == ("paragraph"))
             {
                 ISectionPrimitive paragraph = new Paragraph(split[1].Trim());

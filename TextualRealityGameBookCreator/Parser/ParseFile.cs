@@ -145,5 +145,17 @@ namespace TextualRealityGameBookCreator.Parser
             _errors.Add(errorMessage);
             throw new InvalidOperationException(errorMessage);
         }
+
+        private string[] SplitInnerLine(char charToSplit, string inputString)
+        {
+            string[] split = inputString.Split(charToSplit);
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + inputString + ">.");
+            }
+
+            return split;
+        }
     }
 }
