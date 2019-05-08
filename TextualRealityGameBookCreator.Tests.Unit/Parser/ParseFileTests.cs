@@ -195,7 +195,6 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.IsTrue(book.GetContents().Exists("Start"));
 
             Assert.AreEqual(5, book.CountParagraph);
-
         }
     }
 }

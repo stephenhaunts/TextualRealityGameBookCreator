@@ -54,37 +54,20 @@ namespace TextualRealityGameBookCreator.Parser
         {
             if (strippedLine.ToLower().StartsWith("paragraph", StringComparison.Ordinal))
             {
-                string[] split = strippedLine.Split('=');
-
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].Trim().ToLower();
-                if (firstToken == ("paragraph"))
-                {
-                    ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
-                    _currentParsedParagraph.Add(paragraph);
-                }
+                ExtractParagraph(strippedLine);
                 return;
             }
 
             if (strippedLine.ToLower().StartsWith("image", StringComparison.Ordinal))
             {
-                string[] split = strippedLine.Split('=');
+                ExtractImage(strippedLine);
+                return;
+            }
 
-                if (split.Length != 2)
-                {
-                    ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
-                }
-
-                var firstToken = split[0].Trim().ToLower();
-                if (firstToken == ("image"))
-                {
-                    ISectionPrimitive paragraph = new Image(split[1].Trim());
-                    _currentParsedParagraph.Add(paragraph);
-                }
+            // choice.left = Retreat from the castle and go back down the pathway.
+            if (strippedLine.ToLower().StartsWith("choice", StringComparison.Ordinal))
+            {
+                ExtractChoice(strippedLine);
                 return;
             }
 
@@ -96,6 +79,65 @@ namespace TextualRealityGameBookCreator.Parser
 
             ErrorAndThrow("Invalid attribute found in paragraph on line " + _lineCounter + " <" + strippedLine + ">.");
 
+        }
+
+        private void ExtractChoice(string strippedLine)
+        {
+            string[] split = strippedLine.Split('=');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].Trim().ToLower();
+            string[] choiceSplit = firstToken.Split('.');
+
+            if (choiceSplit[0] == ("choice"))
+            {
+                var secondToken = split[1].Trim().ToLower();
+                IChoice choice = new Choice
+                {
+                    LinkToId = choiceSplit[1],
+                    Text = secondToken
+                };
+
+                _currentParsedParagraph.Add(choice);
+            }
+        }
+
+        private void ExtractImage(string strippedLine)
+        {
+            string[] split = strippedLine.Split('=');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].Trim().ToLower();
+            if (firstToken == ("image"))
+            {
+                ISectionPrimitive paragraph = new Image(split[1].Trim());
+                _currentParsedParagraph.Add(paragraph);
+            }
+        }
+
+        private void ExtractParagraph(string strippedLine)
+        {
+            string[] split = strippedLine.Split('=');
+
+            if (split.Length != 2)
+            {
+                ErrorAndThrow("Error on line " + _lineCounter + " <" + strippedLine + ">.");
+            }
+
+            var firstToken = split[0].Trim().ToLower();
+            if (firstToken == ("paragraph"))
+            {
+                ISectionPrimitive paragraph = new Paragraph(split[1].Trim());
+                _currentParsedParagraph.Add(paragraph);
+            }
         }
     }
 }
