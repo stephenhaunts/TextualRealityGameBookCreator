@@ -87,6 +87,10 @@ namespace TextualRealityGameBookCreator.Parser
 
                         return Parse(_rawFile);
                     }
+                    else
+                    {
+                       ErrorAndThrow("File on line <" + _lineCounter + "> (" + fullFilename + ") doesn't exist.");
+                    }
                 }
             }
             catch (InvalidOperationException) { }
