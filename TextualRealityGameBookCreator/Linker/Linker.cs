@@ -21,19 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
 using TextualRealityGameBookCreator.Interfaces;
 
 namespace TextualRealityGameBookCreator.Linker
 {
-    public class Linker : ILinker
+    public class BookLinker : ILinker
     {
-        public Linker()
+        public BookLinker()
         {
         }
 
         public IBook Link(IBook book)
         {
-            return null;
+            if (book == null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            if (!book.Compiled)
+            {
+                throw new InvalidOperationException("You can not run the linker on this book until the compiler has been run.");
+            }
+
+            if (book.Linked)
+            {
+                throw new InvalidOperationException("This book has already been linked.");
+            }
+
+            return book;
         }
     }
 

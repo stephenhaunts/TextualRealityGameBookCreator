@@ -25,13 +25,44 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextualRealityGameBookCreator.Interfaces;
 using TextualRealityGameBookCreator.Parser;
+using TextualRealityGameBookCreator.Linker;
 using TextualRealityGameBookCreator.SectionPrimitives;
 
-namespace TextualRealityGameBookCreator.Tests.Unit.Linker
+namespace TextualRealityGameBookCreator.Tests.Unit
 {
     [TestClass]
-    public class LinkerTests
+    public class BookLinkerTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LinkMethodThrowsArgumentNullExceptionIfBookIsNull()
+        {
+            ILinker linker = new BookLinker();
+            linker.Link(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void LinkMethodThrowsInvalidOperationExceptionIfBookNotCompiled()
+        {
+            IBook book = new Book();
+            
+            ILinker linker = new BookLinker();
+            linker.Link(book);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void LinkMethodThrowsInvalidOperationExceptionIfBookAlreadyLinked()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example4.gbc");
+            book.Linked = true;
+
+            ILinker linker = new BookLinker();
+            linker.Link(book);
+        }
+
         [TestMethod]
         public void LoadAndLinkExample4()
         {
