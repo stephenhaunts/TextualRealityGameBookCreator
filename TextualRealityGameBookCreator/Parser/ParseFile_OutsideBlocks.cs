@@ -29,6 +29,13 @@ namespace TextualRealityGameBookCreator.Parser
     {
         private void ProcessOutsideBlocks(string strippedLine)
         {
+            if (strippedLine.ToLower().StartsWith("include", StringComparison.Ordinal))
+            {
+                var removeInclude = strippedLine.Substring("include".Length).Trim();
+                _fileStack.Push(removeInclude);
+                return;
+            } 
+
             if (strippedLine.ToLower().StartsWith("define", StringComparison.Ordinal))
             {
                 // remove 'define' from start of line

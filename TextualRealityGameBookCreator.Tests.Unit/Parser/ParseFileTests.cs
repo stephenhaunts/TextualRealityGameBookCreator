@@ -176,7 +176,7 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             IParseFile parser = new ParseFile();
             var book = parser.Parse("/Examples/Example4.gbc");
 
-           // ValidateBook(book);
+            ValidateBook(book);
         }
 
         private static void ValidateBook(IBook book)

@@ -1,5 +1,5 @@
-﻿include ./Example4-1.gbc
-include ./Example4-2.gbc
+﻿include /Examples/Example4-1.gbc
+include /Examples/Example4-2.gbc
 
 define bookname : The Strangest Pirate Story in the Galaxy!
 

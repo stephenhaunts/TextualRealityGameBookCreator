@@ -19,6 +19,7 @@ end
 define paragraph : right
    paragraph = You are eaten by an ogre with big teeth that are dripping blood onto the floor. You can start the quest again.
    image = ./image.jpg
+   choice.start = If you want to try again, please restart the adventure.
 end
 
 define paragraph : talktoman

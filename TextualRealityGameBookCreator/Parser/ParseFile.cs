@@ -39,6 +39,7 @@ namespace TextualRealityGameBookCreator.Parser
         private ParserState _parserState = ParserState.OutsideDefine;
         private IBookSection _currentParsedSection;
         private IBookParagraph _currentParsedParagraph;
+        private readonly Stack<string> _fileStack;
 
         public ParseFile()
         {
@@ -47,6 +48,7 @@ namespace TextualRealityGameBookCreator.Parser
             _errors = new List<string>();
             _lineCounter = 0;
             _parserState = ParserState.OutsideDefine;
+            _fileStack = new Stack<string>();
         }
 
         public ReadOnlyCollection<string> RawFile
@@ -67,32 +69,51 @@ namespace TextualRealityGameBookCreator.Parser
 
         public IBook Parse(List<string> rawFile)
         {
-            _book = new Book();
+          // _book = new Book();
 
             try
             {
-                foreach (var line in _rawFile)
+                ProcessFile(rawFile);
+
+                while (_fileStack.Count > 0)
                 {
-                    _lineCounter++;
+                    string fileName = _fileStack.Pop();
+                    var path = Path.GetFullPath(Environment.CurrentDirectory);
+                    var fullFilename = Path.GetFullPath(path + fileName);
 
-                    var strippedLine = line.Trim();
-
-                    if (string.IsNullOrEmpty(strippedLine))
+                    if (File.Exists(fullFilename))
                     {
-                        continue;
-                    }
+                        _rawFile = new List<string>(File.ReadAllLines(fullFilename));
 
-                    if (CheckForComments(strippedLine))
-                    {
-                        continue;
+                        return Parse(_rawFile);
                     }
-
-                    ProcessDefine(strippedLine);
                 }
             }
             catch (InvalidOperationException) { }
 
             return _book;
+        }
+
+        private void ProcessFile(List<string> rawFile)
+        {
+            foreach (var line in rawFile)
+            {
+                _lineCounter++;
+
+                var strippedLine = line.Trim();
+
+                if (string.IsNullOrEmpty(strippedLine))
+                {
+                    continue;
+                }
+
+                if (CheckForComments(strippedLine))
+                {
+                    continue;
+                }
+
+                ProcessDefine(strippedLine);
+            }
         }
 
         public IBook Parse(string fileName)
@@ -102,7 +123,7 @@ namespace TextualRealityGameBookCreator.Parser
 
             if (File.Exists(fullFilename))
             { 
-                _rawFile = new List<string>(File.ReadAllLines(fullFilename));
+               _rawFile = new List<string>(File.ReadAllLines(fullFilename));
 
                 return Parse(_rawFile);
             }

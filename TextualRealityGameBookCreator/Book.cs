@@ -31,7 +31,7 @@ namespace TextualRealityGameBookCreator
     {
         private readonly Dictionary<string, IBookSection> _bookSections;
         private readonly Dictionary<string, IBookParagraph> _bookParagraph;
-
+       
         private readonly IBookContents _bookContents;
 
         public Book()
