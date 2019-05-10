@@ -1,0 +1,11 @@
+﻿include ./Example4-1.gbc
+include ./Example4-2.gbc
+
+define bookname : The Strangest Pirate Story in the Galaxy!
+
+define contents
+   prologue
+   dedication
+   rules
+   start
+end

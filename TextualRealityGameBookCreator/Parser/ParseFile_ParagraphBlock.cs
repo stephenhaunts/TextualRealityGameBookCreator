@@ -91,7 +91,7 @@ namespace TextualRealityGameBookCreator.Parser
 
             if (choiceSplit[0] == ("choice"))
             {
-                var secondToken = split[1].Trim().ToLower();
+                var secondToken = split[1].Trim();
                 IChoice choice = new Choice
                 {
                     LinkToId = choiceSplit[1],

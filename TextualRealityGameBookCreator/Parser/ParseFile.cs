@@ -68,13 +68,13 @@ namespace TextualRealityGameBookCreator.Parser
         public IBook Parse(List<string> rawFile)
         {
             _book = new Book();
+
             try
             {
                 foreach (var line in _rawFile)
                 {
                     _lineCounter++;
 
-                    // TODO: Look for more complete way of stripping whitepace from the front.
                     var strippedLine = line.Trim();
 
                     if (string.IsNullOrEmpty(strippedLine))
@@ -91,7 +91,6 @@ namespace TextualRealityGameBookCreator.Parser
                 }
             }
             catch (InvalidOperationException) { }
-           
 
             return _book;
         }

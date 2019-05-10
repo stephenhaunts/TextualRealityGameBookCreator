@@ -19,6 +19,7 @@
     <None Remove="Examples\Game Book Example.gbc" />
     <None Remove="Examples\Example1 %28copy%29.gbc" />
     <None Remove="Examples\Example1 - BookName Only %28copy%29.gbc" />
+    <None Remove="Example1.gbc" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Examples\Game Book Example %28copy%29.gbc">
@@ -36,9 +37,6 @@
     <None Update="Examples\Example1.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Example1.gbc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Examples\Example1 - BookName Only.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -52,6 +50,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\Example2 - Duplicate Contents.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example4-2.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example4-1.gbc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Example4.gbc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
