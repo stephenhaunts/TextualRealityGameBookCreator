@@ -65,6 +65,7 @@
   <ItemGroup>
     <Folder Include="Section Primitives\" />
     <Folder Include="Parser\" />
+    <Folder Include="Linker\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="ParseFileTests.cs">

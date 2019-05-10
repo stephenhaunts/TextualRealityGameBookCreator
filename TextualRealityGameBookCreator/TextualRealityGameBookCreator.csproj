@@ -8,5 +8,6 @@
     <Folder Include="Section Primitives\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Parser\" />
+    <Folder Include="Linker\" />
   </ItemGroup>
 </Project>
