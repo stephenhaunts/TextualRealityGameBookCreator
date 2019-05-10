@@ -167,6 +167,20 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             IParseFile parser = new ParseFile();
             var book = parser.Parse("/Examples/Example3.gbc");
 
+            ValidateBook(book);
+        }
+
+        [TestMethod]
+        public void LoadExample4()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example4.gbc");
+
+           // ValidateBook(book);
+        }
+
+        private static void ValidateBook(IBook book)
+        {
             Assert.IsNotNull(book);
             Assert.AreEqual("The Strangest Pirate Story in the Galaxy!", book.BookName);
             Assert.AreEqual(3, book.CountSections);
@@ -224,12 +238,12 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             Assert.AreEqual("talktoman", book.GetParagraph("talktoman").Name);
             Assert.AreEqual("The old man looks at you agitated and then pulls out a knife that he plunges into your heart. As the life drains out of your body, you stare into his cold, dead, eyes. He cackles to himself as he licks the blood from his knife.", ((Paragraph)book.GetParagraph("talktoman").Primitives[0]).Text);
             Assert.AreEqual("start", book.GetParagraph("talktoman").Choices[0].LinkToId);
-            Assert.AreEqual("If you want to try again, please restart the adventure.", book.GetParagraph("right").Choices[0].Text);
+            Assert.AreEqual("If you want to try again, please restart the adventure.", book.GetParagraph("talktoman").Choices[0].Text);
 
             Assert.AreEqual("takepath", book.GetParagraph("takepath").Name);
             Assert.AreEqual("You walk down the path for what feels like hours and arrive at the gates of a castle. There is a bell next to the gate.", ((Paragraph)book.GetParagraph("takepath").Primitives[0]).Text);
-            Assert.AreEqual("left", book.GetParagraph("talktoman").Choices[0].LinkToId);
-            Assert.AreEqual("Retreat from the castle and go back down the pathway.", book.GetParagraph("left").Choices[0].Text);
+            Assert.AreEqual("left", book.GetParagraph("takepath").Choices[0].LinkToId);
+            Assert.AreEqual("Retreat from the castle and go back down the pathway.", book.GetParagraph("takepath").Choices[0].Text);
         }
     }
 }

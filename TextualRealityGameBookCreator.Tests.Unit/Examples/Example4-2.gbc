@@ -1,7 +1,7 @@
 ﻿define paragraph : start
    paragraph = You are standing at the start of a winding path. There is a split in the road going left or right.
    image = ./image.jpg
-   paragraph = What will you do?.
+   paragraph = What will you do?
    
    choice.left = Take the left hand path.
    choice.right = Take the right hand path.
@@ -10,7 +10,7 @@ end
 define paragraph :left
    paragraph = You see an old man standing in the road. He looks frail and unwelcoming. The path continues into the distance.
    image = ./image.jpg
-   paragraph = What will you do?.
+   paragraph = What will you do?
    
    choice.talktoman = Ask the old man how to get to the castle.
    choice.takepath = Ignore the old man and continue down the path.
@@ -19,7 +19,6 @@ end
 define paragraph : right
    paragraph = You are eaten by an ogre with big teeth that are dripping blood onto the floor. You can start the quest again.
    image = ./image.jpg
-   paragraph = What will you do?.
 end
 
 define paragraph : talktoman
@@ -28,6 +27,6 @@ define paragraph : talktoman
 end
 
 define paragraph : takepath
-   paragraph = "You walk down the path for what feels like hours and arrive at the gates of a castle. There is a bell next to the gate.
+   paragraph = You walk down the path for what feels like hours and arrive at the gates of a castle. There is a bell next to the gate.
    choice.left = Retreat from the castle and go back down the pathway.
 end
