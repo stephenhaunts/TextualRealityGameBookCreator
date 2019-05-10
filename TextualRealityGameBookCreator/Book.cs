@@ -31,7 +31,6 @@ namespace TextualRealityGameBookCreator
     {
         private readonly Dictionary<string, IBookSection> _bookSections;
         private readonly Dictionary<string, IBookParagraph> _bookParagraph;
-       
         private readonly IBookContents _bookContents;
 
         public Book()
@@ -44,6 +43,8 @@ namespace TextualRealityGameBookCreator
         }
 
         public string BookName { get; set; }
+        public bool Compiled { get; set; }
+        public bool Linked { get; set; }
 
         public int CountSections
         {

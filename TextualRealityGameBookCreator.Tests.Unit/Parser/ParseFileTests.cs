@@ -179,6 +179,18 @@ namespace TextualRealityGameBookCreator.Tests.Unit
             ValidateBook(book);
         }
 
+        [TestMethod]
+        public void WhenCompileCompletedSetCompiledFlagToTrueAndLinkedFlagToFalse()
+        {
+            IParseFile parser = new ParseFile();
+            var book = parser.Parse("/Examples/Example3.gbc");
+
+            Assert.IsTrue(book.Compiled);
+            Assert.IsFalse(book.Linked);
+
+            ValidateBook(book);
+        }
+
         private static void ValidateBook(IBook book)
         {
             Assert.IsNotNull(book);

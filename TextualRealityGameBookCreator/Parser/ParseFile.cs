@@ -49,6 +49,8 @@ namespace TextualRealityGameBookCreator.Parser
             _lineCounter = 0;
             _parserState = ParserState.OutsideDefine;
             _fileStack = new Stack<string>();
+            _book.Compiled = false;
+            _book.Linked = false;
         }
 
         public ReadOnlyCollection<string> RawFile
@@ -69,8 +71,6 @@ namespace TextualRealityGameBookCreator.Parser
 
         public IBook Parse(List<string> rawFile)
         {
-          // _book = new Book();
-
             try
             {
                 ProcessFile(rawFile);
@@ -94,6 +94,9 @@ namespace TextualRealityGameBookCreator.Parser
                 }
             }
             catch (InvalidOperationException) { }
+
+            _book.Compiled = true;
+            _book.Linked = false;
 
             return _book;
         }

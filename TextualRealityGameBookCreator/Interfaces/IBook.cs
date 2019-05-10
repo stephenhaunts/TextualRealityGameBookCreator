@@ -33,12 +33,14 @@ namespace TextualRealityGameBookCreator.Interfaces
         int CountSections { get; }
         IBookSection GetSection(string sectionName);
 
-
         void AddParagraph(IBookParagraph paragraph);
         bool ParagraphExists(string paragraphName);
         int CountParagraph { get; }
         IBookParagraph GetParagraph(string sectionName);
 
         IBookContents GetContents();
+
+        bool Compiled { get; set; }
+        bool Linked { get; set; }
     }
 }
