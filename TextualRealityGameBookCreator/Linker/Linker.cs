@@ -28,9 +28,6 @@ namespace TextualRealityGameBookCreator.Linker
 {
     public class BookLinker : ILinker
     {
-        public BookLinker()
-        {
-        }
 
         public IBook Link(IBook book)
         {

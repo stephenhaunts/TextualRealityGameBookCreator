@@ -16,3 +16,13 @@ TextualRealityGameBookCreator/bin/Debug/netstandard2\.0/
 TextualRealityGameBookCreator/obj/Debug/netstandard2\.0/
 
 TextualRealityGameBookCreator/obj/
+
+*.dll
+
+TextualRealityGameBookCreator.Tests.Unit/bin/Debug/netcoreapp3.0/Examples/
+
+*.pdb
+
+TextualRealityGameBookCreator.Tests.Unit/bin/Debug/netcoreapp3.0/
+
+TextualRealityGameBookCreator/bin/Debug/netstandard2.1/
